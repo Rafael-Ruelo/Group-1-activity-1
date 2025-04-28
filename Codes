@@ -4,14 +4,14 @@
 
 using namespace std;
 
-
+//function for delaying time
 void doTask(string taskName, int milliseconds) {
 	cout << "Starting: " << taskName << endl;
 	this_thread::sleep_for(chrono::milliseconds(milliseconds));
 	cout << "Finished: " << taskName << endl;
 }
 
-
+//function for making a sandwich using sequential computing
 void makeSandwich() {
 	cout << "Making a Sandwich (Sequential)" << endl;
 	doTask("Getting some Bread", 3000);
@@ -23,7 +23,7 @@ void makeSandwich() {
 	doTask("Closing the Sandwich", 3000);
 }
 
-
+//function for making coffee and toast using concurrent
 void makeCoffeeAndToast() {
 	cout << "Making Coffee and Toast (Concurrent)" << endl;
 	thread coffee(doTask, "Brewing Coffee", 3000);
@@ -34,7 +34,7 @@ void makeCoffeeAndToast() {
 	toast.join();
 }
 
-
+//function for doing house chores using parallel
 void doHouseChores() {
 	cout << "Doing House Chores (Parallel)\n";
 	thread dishes(doTask, "Washing Dishes", 3000);
@@ -45,7 +45,7 @@ void doHouseChores() {
 	clothes.join();
 }
 
-
+//function for organizing party using concurrent and parallel computing
 void organizeParty() {
 	cout << "Organizing Party (Concurrent + Parallel)";
 	cout<<" "<<endl;
@@ -66,6 +66,7 @@ void organizeParty() {
 int main() {
 int choice;
 
+//menu for activities
 do {
     cout << "******************************" << endl;
 	cout << "Select an activity:" << endl;
