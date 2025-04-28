@@ -1,0 +1,97 @@
+#include <iostream>
+#include <thread> 
+#include <chrono> 
+
+using namespace std;
+
+
+void doTask(string taskName, int milliseconds) {
+	cout << "Starting: " << taskName << endl;
+	this_thread::sleep_for(chrono::milliseconds(milliseconds));
+	cout << "Finished: " << taskName << endl;
+}
+
+
+void makeSandwich() {
+	cout << "Making a Sandwich (Sequential)" << endl;
+	doTask("Getting some Bread", 3000);
+	    cout<<" "<<endl;
+	doTask("Spreading the Butter", 3000);
+		cout<<" "<<endl;
+	doTask("Adding some Fillings", 3000);
+		cout<<" "<<endl;
+	doTask("Closing the Sandwich", 3000);
+}
+
+
+void makeCoffeeAndToast() {
+	cout << "Making Coffee and Toast (Concurrent)" << endl;
+	thread coffee(doTask, "Brewing Coffee", 3000);
+		cout<<" "<<endl;
+	thread toast(doTask, "Toasting Bread", 3000);
+		cout<<" "<<endl;
+	coffee.join();
+	toast.join();
+}
+
+
+void doHouseChores() {
+	cout << "Doing House Chores (Parallel)\n";
+	thread dishes(doTask, "Washing Dishes", 3000);
+		cout<<" "<<endl;
+	thread clothes(doTask, "Folding Clothes", 3000);
+		cout<<" "<<endl;
+	dishes.join();
+	clothes.join();
+}
+
+
+void organizeParty() {
+	cout << "Organizing Party (Concurrent + Parallel)";
+	cout<<" "<<endl;
+	thread decorate(doTask, "Decorating the room", 3000);
+		cout << endl;
+	thread setupMusic(doTask, "Setting up music", 3000);
+		cout << endl;
+	
+	decorate.join();
+	setupMusic.join();
+	
+	doTask("Preparing the food", 3000);
+		cout<<" "<<endl;
+	doTask("Welcoming guests", 1000);
+		cout<<" "<<endl;
+}
+
+int main() {
+int choice;
+
+do {
+    cout << "******************************" << endl;
+	cout << "Select an activity:" << endl;
+	cout << "[1] Make a Sandwich (Sequential)" << endl;
+	cout << "[2] Make Coffee and Toast (Concurrent)" << endl;
+	cout << "[3] Do House Chores (Parallel)" << endl;
+	cout << "[4] Organize Party (Concurrent + Parallel) " << endl;
+	cout << "[5] Exit" << endl;
+	cout << "Enter choice: ";
+	cin >> choice;
+	cout << "******************************" << endl;
+	
+	if (choice == 1)
+	makeSandwich();
+	else if (choice == 2)
+	makeCoffeeAndToast();
+	else if (choice == 3)
+	doHouseChores();
+	else if (choice == 4)
+	organizeParty();
+	else if (choice == 5)
+	cout << "Exiting...\n";
+	else
+	cout << "Invalid choice. Try again." << endl;
+
+	}while (choice != 5);
+
+	return 0;
+}
